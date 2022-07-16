@@ -4,19 +4,27 @@ using UnityEngine;
 
 public class Battle : MonoBehaviour
 {
+	public enum PlayerResources
+	{
+		Mana = 3,
+		ManaCharging = 4
+	}
+
 	public Dice dice;
 	public float initialTurnDuration = 2;
 	public int halveDurationEvery = 6;
 	public float lastTurnTime = 0;
 
 	public Room room;
-	public float turn = 0;
-	public int playerHP;
-	public int[] playerResources;
-	public int bossHP;
-	public int bossActionIndex;
-	public int bossActionLoopCount;
-	IEnumerator playTurns;
+
+	[SerializeField] int turn;
+	[SerializeField] int playerHP;
+	[SerializeField] int[] playerResources;
+	[SerializeField] int arrowsTraversedThisTurn;
+	[SerializeField] int bossHP;
+	[SerializeField] int bossActionIndex;
+	[SerializeField] int bossActionLoopCount;
+	private IEnumerator playTurns;
 
 	private void Start()
 	{
@@ -49,7 +57,7 @@ public class Battle : MonoBehaviour
 				actionOrLoop = room.BossActions[bossActionIndex];
 			}
 
-			Resolve(actionOrLoop.action, dice.currentSkill;
+			Resolve(actionOrLoop.action, dice.currentSkill);
 
 			dice.Advance();
 		}
@@ -57,8 +65,7 @@ public class Battle : MonoBehaviour
 
 	void Resolve(BossAction bossAction, Skill playerAction)
 	{
-		int bossDef = 0;
-		int playerDef = 0;
+		// priority 1: dice ~~sheninigans~~ movements
 		if (bossAction == BossAction.FlipDice) {
 			dice.Flip();
 			playerAction = dice.currentSkill;
@@ -67,16 +74,34 @@ public class Battle : MonoBehaviour
 			dice.Randomize();
 			playerAction = dice.currentSkill;
 		}
+		// priority 2: defense, buffs and other statuses
+		int bossDef = 0;
+		int playerDef = 0;
 		if (bossAction == BossAction.Def)
 			bossDef = 1;
 		if (playerAction.Effect == SkillEffect.Def)
 			playerDef = 1;
+		// mana
+		if (playerAction.Effect == SkillEffect.Mana)
+			playerResources[(int)PlayerResources.Mana] += playerAction.Value;
+		if (playerAction.Effect == SkillEffect.ManaCharged)
+			playerResources[(int)PlayerResources.ManaCharging]++;
+		// arrows
+		if (playerAction.Effect == SkillEffect.Move)
+		{
+			playerResources[(int)PlayerResources.Mana] += playerResources[(int)PlayerResources.ManaCharging];
+			dice.nextSide = Dice.d6neighborSide[(int)dice.currentSide, playerAction.Value];
+		}
+		// priority 3: attacks
 		if (bossAction == BossAction.Atk)
 			playerHP -= Mathf.Max(0, 1 - playerDef);
 		if (playerAction.Effect == SkillEffect.Atk)
 			bossHP -= Mathf.Max(0, playerAction.Value - bossDef);
 		if (playerAction.Effect == SkillEffect.AtkCharged)
 			bossHP -= Mathf.Max(0, playerResources[3] - bossDef);
+		// priority 0: make sure you don't forget the inspector >:{
+		if (playerAction.Effect == SkillEffect.Pass)
+			Debug.LogWarning($"Skill effect for skill '{playerAction.name}' is Pass. Did we forget to set it?");
 	}
 
 	void BattleEnd(bool won)

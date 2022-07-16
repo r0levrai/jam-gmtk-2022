@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Turn Up
   m_EditorClassIdentifier: 
   Description: Turn the dice to the face upwards
+  Effect: 6
   Value: 0
   Resources: 0000000000000000000000000000000000000000
   Icon: {fileID: 21300000, guid: 8677804e7f5cd264f955ce6aee3aaaaf, type: 3}

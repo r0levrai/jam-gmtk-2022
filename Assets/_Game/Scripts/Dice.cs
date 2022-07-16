@@ -10,6 +10,14 @@ public class Dice : MonoBehaviour
 	public static Side[] opposedSide = new Side[] {
 		Side.Back, Side.Front, Side.Down, Side.Up, Side.Right, Side.Left
 	};
+	public static Side[,] d6neighborSide = new Side[,] { // in clockwize order from the top of the face
+		{ Side.Up, Side.Right, Side.Down, Side.Left },
+		{ Side.Up, Side.Left, Side.Down, Side.Right },
+		{ Side.Back, Side.Right, Side.Front, Side.Left },
+		{ Side.Back, Side.Left, Side.Front, Side.Left },
+		{ Side.Up, Side.Front, Side.Down, Side.Back },
+		{ Side.Up, Side.Back, Side.Down, Side.Front },
+	};
 
 	public DiceFace[] sides = new DiceFace[6];
 	public Skill[] skills = new Skill[6];
@@ -67,11 +75,7 @@ public class Dice : MonoBehaviour
 		if (d != 6)
 			Debug.LogError("[Dice.Randomize] Neighbors faces for d!=6 unknown, randomization undefined");
 		currentSide = (Side) Random.Range(0, d);
-		nextSide = (Side)Random.Range(0, d);  // TODO: do properly o:)
-		while (nextSide == currentSide || nextSide == opposedSide[(int)currentSide])
-		{
-			nextSide = (Side)Random.Range(0, d);
-		}
+		nextSide = d6neighborSide[(int)currentSide, Random.Range(0, d6neighborSide.GetLength(1))];
 	}
 	public void Randomize() => Randomize(this.sides.Length);
 

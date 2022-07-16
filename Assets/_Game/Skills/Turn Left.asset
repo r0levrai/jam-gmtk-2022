@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Turn Left
   m_EditorClassIdentifier: 
   Description: Turn the dice one face left
-  Value: 0
+  Effect: 6
+  Value: 3
   Resources: 0000000000000000000000000000000000000000
   Icon: {fileID: 21300000, guid: cb582eaace9e5c345950b2ef145b5c99, type: 3}
   Background: 2

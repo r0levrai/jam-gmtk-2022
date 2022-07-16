@@ -30,7 +30,8 @@ public class DiceFace : MonoBehaviour
 		}
 		background.color = Data.Instance.bgColors[(int)skill.Background];
 		value.color = Data.Instance.bgTextColors[(int)skill.Background];
-		value.text = skill.Value == 0 ? "" : skill.Value.ToString();
+		bool hideValue = skill.Value == 0 || skill.Effect == SkillEffect.Move;
+		value.text = hideValue ? "" : skill.Value.ToString();
 		icon.sprite = skill.Icon;
 
 		foreach (Transform child in resources.transform)

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Parry
   m_EditorClassIdentifier: 
   Description: Prevent all damages this turn
+  Effect: 1
   Value: 0
   Resources: 0000000000000000000000000000000000000000
   Icon: {fileID: 21300000, guid: f444dccaadfd7e64da229426d43b18b7, type: 3}
