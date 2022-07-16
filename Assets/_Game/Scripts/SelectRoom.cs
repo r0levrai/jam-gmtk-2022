@@ -30,8 +30,8 @@ public class SelectRoom : MonoBehaviour
 		{
 			Room room = data[i];
 			DiceFace uiElement = Instantiate<DiceFace>(uiElementPrefab, uiLayout.transform);
-			room.RoomIcon.Value = i + 1;
 			uiElement.SetSkill(room.RoomIcon);
+			uiElement.value.text = (i+1).ToString();
 			uiElement.button.onClick.AddListener( () => LoadRoom(room) );
 		}
     }
@@ -39,7 +39,7 @@ public class SelectRoom : MonoBehaviour
 	public void LoadRoom(Room room)
 	{
 		diceBuilder.gameObject.SetActive(true);
-		diceBuilder.SetPossibleFaces(room.DiceFacesAvailable);
+		diceBuilder.SetRoom(room);
 		this.gameObject.SetActive(false);
 	}
 }
