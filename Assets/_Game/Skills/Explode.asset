@@ -15,6 +15,7 @@ MonoBehaviour:
   Description: 'Use all available mana,
 
     dealing {0} damage per mana consumed'
+  Effect: 4
   Value: 0
   Resources: 0000000000000000000000000200000000000000
   Icon: {fileID: 21300000, guid: 933fa9d551032fd4f9f88701c7a37b6a, type: 3}

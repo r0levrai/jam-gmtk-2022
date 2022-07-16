@@ -20,6 +20,9 @@ public enum SkillEffect
 	AtkCharged,
 	ManaCharged,
 	Move,
+	Flip,
+	Randomize,
+	Heal,
 }
 
 [CreateAssetMenu(fileName = "New Skill", menuName = "ScriptableObjects/CreateSkill", order = 1)]

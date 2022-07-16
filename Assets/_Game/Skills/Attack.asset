@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Attack
   m_EditorClassIdentifier: 
   Description: Deal {0} damage
+  Effect: 2
   Value: 1
   Resources: 0000000000000000000000000100000000000000
   Icon: {fileID: 21300000, guid: cb6e1c1ab0c145d4da399745db0e6e88, type: 3}

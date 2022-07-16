@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Focus
   m_EditorClassIdentifier: 
   Description: Create {0} mana
+  Effect: 3
   Value: 1
   Resources: 0000000000000000000000000000000000000000
   Icon: {fileID: 21300000, guid: 5d5ace66b077c25478f6c39575fa2b4c, type: 3}

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FocusCharged
   m_EditorClassIdentifier: 
   Description: Create {0} mana per dice face visited
-  Value: 3
+  Effect: 5
+  Value: 1
   Resources: 0000000000000000000000000000000000000000
   Icon: {fileID: 21300000, guid: 0d0a2995e220216498bff58646bdafff, type: 3}
   Background: 3
