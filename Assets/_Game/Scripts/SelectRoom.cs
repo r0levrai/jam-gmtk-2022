@@ -39,7 +39,7 @@ public class SelectRoom : MonoBehaviour
 	public void LoadRoom(Room room)
 	{
 		diceBuilder.gameObject.SetActive(true);
-		diceBuilder.SetPossibleFaces(room.DiceFacesAvailable);
+		diceBuilder.SetRoom(room);
 		this.gameObject.SetActive(false);
 	}
 }

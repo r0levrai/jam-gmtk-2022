@@ -6,14 +6,16 @@ using UnityEngine.UI;
 public class DiceBuilder : MonoBehaviour
 {
 	public Dice dice;
+	public Battle battle;
 	public LayoutGroup uiLayout;
 	public DiceFace uiElementPrefab;
+	public Skill pass;
 	public Skill[] possibleFaces;
-    public SkillCard skillCard;
+	public SkillCard skillCard;
     public Button resetButton, removeButton, resetCameraButton, startButton;
+	public Room room;
 
-    public Skill pass;
-    Skill selected = null;
+	Skill selected = null;
     int selectedFace = -1;
     DiceFace selectedDF = null;
 
@@ -44,8 +46,9 @@ public class DiceBuilder : MonoBehaviour
 
     private void StartBattle()
     {
-
-    }
+		if (room != null)
+			battle.StartBattle(room);
+	}
 
     private void RemoveFace()
     {
@@ -72,6 +75,12 @@ public class DiceBuilder : MonoBehaviour
 
         dice.transform.rotation = Quaternion.identity;
     }
+
+	public void SetRoom(Room room)
+	{
+		SetPossibleFaces(room.DiceFacesAvailable);
+		this.room = room;
+	}
 
     public void SetPossibleFaces(Skill[] possibleFaces)
 	{

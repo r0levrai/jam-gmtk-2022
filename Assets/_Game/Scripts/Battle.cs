@@ -13,58 +13,64 @@ public class Battle : MonoBehaviour
 	public Dice dice;
 	public float initialTurnDuration = 2;
 	public int halveDurationEvery = 6;
-	public float lastTurnTime = 0;
 
 	public Room room;
 
 	[SerializeField] int turn;
 	[SerializeField] int playerHP;
 	[SerializeField] int[] playerResources;
-	[SerializeField] int arrowsTraversedThisTurn;
 	[SerializeField] int bossHP;
 	[SerializeField] int bossActionIndex;
 	[SerializeField] int bossActionLoopCount;
 	private IEnumerator playTurns;
 
-	private void Start()
+	public void StartBattle(Room room)
 	{
+		this.room = room;
 		playTurns = PlayTurns();
 		StartCoroutine(playTurns);
 	}
 
 	IEnumerator PlayTurns()
 	{
+		print("Battle started!");
 		playerHP = 1;
 		playerResources = new int[5];
 		bossHP = room.BossHP;
 		for (turn = 0; ; turn++)
 		{
-			yield return new WaitForSeconds(initialTurnDuration * Mathf.Log(1 + turn/halveDurationEvery));
+			yield return new WaitForSeconds(initialTurnDuration / (1 + (float)turn/halveDurationEvery));
+			
+			Resolve(GetNextBossAction(), dice.currentSkill);
 
-			// boss
-			ActionOrLoop actionOrLoop = room.BossActions[bossActionIndex];
-			while (actionOrLoop.action == BossAction.LoopTo)
-			{
-				if (actionOrLoop.times == 0 || bossActionLoopCount < actionOrLoop.times)
-				{
-					bossActionIndex = actionOrLoop.toElement;
-					bossActionLoopCount++;
-				}
-				else
-				{
-					bossActionIndex++;
-				}
-				actionOrLoop = room.BossActions[bossActionIndex];
-			}
-
-			Resolve(actionOrLoop.action, dice.currentSkill);
-
+			bossActionIndex++;
 			dice.Advance();
 		}
 	}
 
+	BossAction GetNextBossAction()
+	{
+		ActionOrLoop actionOrLoop = room.BossActions[bossActionIndex];
+		while (actionOrLoop.action == BossAction.LoopTo)
+		{
+			if (actionOrLoop.times == 0 || bossActionLoopCount < actionOrLoop.times)
+			{
+				bossActionIndex = actionOrLoop.toElement;
+				bossActionLoopCount++;
+			}
+			else
+			{
+				bossActionIndex++;
+			}
+			actionOrLoop = room.BossActions[bossActionIndex];
+		}
+		return actionOrLoop.action;
+	}
+
 	void Resolve(BossAction bossAction, Skill playerAction)
 	{
+		print($"Player used {playerAction}, Boss used {bossAction}");
+
 		// priority 1: dice ~~sheninigans~~ movements
 		if (bossAction == BossAction.FlipDice) {
 			dice.Flip();
@@ -74,6 +80,7 @@ public class Battle : MonoBehaviour
 			dice.Randomize();
 			playerAction = dice.currentSkill;
 		}
+
 		// priority 2: defense, buffs and other statuses
 		int bossDef = 0;
 		int playerDef = 0;
@@ -92,6 +99,7 @@ public class Battle : MonoBehaviour
 			playerResources[(int)PlayerResources.Mana] += playerResources[(int)PlayerResources.ManaCharging];
 			dice.nextSide = Dice.d6neighborSide[(int)dice.currentSide, playerAction.Value];
 		}
+
 		// priority 3: attacks
 		if (bossAction == BossAction.Atk)
 			playerHP -= Mathf.Max(0, 1 - playerDef);
@@ -99,13 +107,26 @@ public class Battle : MonoBehaviour
 			bossHP -= Mathf.Max(0, playerAction.Value - bossDef);
 		if (playerAction.Effect == SkillEffect.AtkCharged)
 			bossHP -= Mathf.Max(0, playerResources[3] - bossDef);
+
 		// priority 0: make sure you don't forget the inspector >:{
-		if (playerAction.Effect == SkillEffect.Pass)
+		if (playerAction.Effect == SkillEffect.Pass && playerAction.name != "Pass")
 			Debug.LogWarning($"Skill effect for skill '{playerAction.name}' is Pass. Did we forget to set it?");
+
+		// battle end
+		if (bossHP <= 0)
+		{
+			BattleEnd(true);
+		}
+		else if (playerHP <= 0)
+		{
+			BattleEnd(false);
+		}
 	}
 
 	void BattleEnd(bool won)
 	{
+		StopCoroutine(playTurns);
+
 		if (won)
 		{
 			print("Battle won :)");
