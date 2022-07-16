@@ -18,6 +18,7 @@ public class DiceBuilder : MonoBehaviour
 			dice.sides[side].button.onClick.AddListener(() => EditFaceDest(s));
 		}
 		SetPossibleFaces(possibleFaces);
+		highlightPossibleFaces(true);
 	}
 
 	public void SetPossibleFaces(Skill[] possibleFaces)
@@ -34,20 +35,34 @@ public class DiceBuilder : MonoBehaviour
 			uiElement.button.onClick.AddListener(() => EditFaceSource(skill));
 		}
 		this.possibleFaces = possibleFaces;
+		this.selected = null;
 	}
 
 	Skill selected = null;
 	void EditFaceSource(Skill skill)
 	{
-		print(skill);
+		//print(skill);
 		selected = skill;
+		highlightPossibleFaces(false);
+		dice.HighlightFaces(true);
 	}
 
 	void EditFaceDest(int side)
 	{
-		print(side);
+		//print(side);
 		if (selected != null)
+		{
 			dice.SetSide(side, selected);
+		}
+		dice.HighlightFaces(false);
+	}
+
+	void highlightPossibleFaces(bool enabled)
+	{
+		foreach (var child in uiLayout.GetComponentsInChildren<DiceFace>())
+		{
+			child.SetHighlight(enabled);
+		}
 	}
 
 	Vector3 mouse;
