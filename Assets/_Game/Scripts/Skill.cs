@@ -11,10 +11,22 @@ public enum SkillColor
 	Green
 }
 
+public enum SkillEffect
+{
+	Pass,
+	Def,
+	Atk,
+	Mana,
+	AtkCharged,
+	ManaCharged,
+	Move,
+}
+
 [CreateAssetMenu(fileName = "New Skill", menuName = "ScriptableObjects/CreateSkill", order = 1)]
 public class Skill : ScriptableObject
 {
 	[MultilineAttribute] public string Description;
+	public SkillEffect Effect;
 	public int Value;
 	public int[] Resources = new int[6];
 	public Sprite Icon;
