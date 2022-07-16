@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6acb3b7e7892a8b4b8ee2dce7176bbce, type: 3}
   m_Name: FocusCharged
   m_EditorClassIdentifier: 
-  Description: Create {0} mana per dice face visited this turn
-  Value: 1
+  Description: Create {0} mana per dice face visited
+  Value: 3
   Resources: 0000000000000000000000000000000000000000
-  Icon: {fileID: 21300000, guid: 5d5ace66b077c25478f6c39575fa2b4c, type: 3}
-  Background: 1
+  Icon: {fileID: 21300000, guid: 0d0a2995e220216498bff58646bdafff, type: 3}
+  Background: 3

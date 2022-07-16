@@ -35,7 +35,7 @@ public class DiceFace : MonoBehaviour
 
 		foreach (Transform child in resources.transform)
 		{
-			//GameObject.DestroyImmediate(child.gameObject);
+			GameObject.Destroy(child.gameObject);
 		}
 		for (int resource = 0; resource < skill.Resources.Length; resource++)
 		{
