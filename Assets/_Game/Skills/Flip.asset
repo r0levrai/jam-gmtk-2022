@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6acb3b7e7892a8b4b8ee2dce7176bbce, type: 3}
-  m_Name: Parry
+  m_Name: Flip
   m_EditorClassIdentifier: 
-  Description: Prevent all damages this turn
-  Value: 0
+  Description: Flip the dice
+  Value: 4
   Resources: 0000000000000000000000000000000000000000
-  Icon: {fileID: 21300000, guid: f444dccaadfd7e64da229426d43b18b7, type: 3}
-  Background: 4
+  Icon: {fileID: 21300000, guid: 807074b4ef498f24eb99b2025a2b5031, type: 3}
+  Background: 2

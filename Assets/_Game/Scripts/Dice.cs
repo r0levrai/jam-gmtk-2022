@@ -34,7 +34,9 @@ public class Dice : MonoBehaviour
 	public DiceFace SetSide(int side, Skill skill)
 	{
 		sides[side].SetSkill(skill);
-		return sides[side];
+        skills[side] = skill;
+
+        return sides[side];
 	}
 
 	public void HighlightFaces(bool enabled)
@@ -44,6 +46,11 @@ public class Dice : MonoBehaviour
 			sides[side].SetHighlight(enabled);
 		}
 	}
+    public void HighlightFace(int nb, bool enabled)
+    {
+        sides[nb].SetHighlight(enabled);
+        
+    }
 
 	public void Advance()
 	{

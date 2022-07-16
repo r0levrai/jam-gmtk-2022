@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6acb3b7e7892a8b4b8ee2dce7176bbce, type: 3}
   m_Name: Attack
   m_EditorClassIdentifier: 
-  Description: Use your dagger to deal {0} damage
+  Description: Deal {0} damage
   Value: 1
-  Resources: 0000000000000000000000000000000000000000
+  Resources: 0000000000000000000000000100000000000000
   Icon: {fileID: 21300000, guid: cb6e1c1ab0c145d4da399745db0e6e88, type: 3}
   Background: 1
