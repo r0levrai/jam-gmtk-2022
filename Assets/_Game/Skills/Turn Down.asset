@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Turn Down
   m_EditorClassIdentifier: 
   Description: Turn the dice to the face downwards
-  Value: 5
+  Value: 0
   Resources: 0000000000000000000000000000000000000000
   Icon: {fileID: 21300000, guid: 3676e08fa14d47a468afd2b43679b30e, type: 3}
   Background: 2

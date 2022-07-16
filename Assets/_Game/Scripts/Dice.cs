@@ -38,6 +38,5 @@ public class Dice : MonoBehaviour
     public void HighlightFace(int nb, bool enabled)
     {
         sides[nb].SetHighlight(enabled);
-        
     }
 }

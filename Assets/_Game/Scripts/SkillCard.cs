@@ -18,6 +18,14 @@ public class SkillCard : MonoBehaviour
 
     bool active = false;
 
+
+    public void Desactivate()
+    {
+        active = false;
+        container.gameObject.SetActive(false);
+        background.gameObject.SetActive(false);
+    }
+
     public void BuildInfo(Skill s)
     {
         if(!active)

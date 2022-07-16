@@ -10,9 +10,12 @@ public class DiceBuilder : MonoBehaviour
 	public DiceFace uiElementPrefab;
 	public Skill[] possibleFaces;
     public SkillCard skillCard;
-    public Button resetButton, removeButton;
+    public Button resetButton, removeButton, resetCameraButton, startButton;
 
     public Skill pass;
+    Skill selected = null;
+    int selectedFace = -1;
+    DiceFace selectedDF = null;
 
     void Start()
 	{
@@ -25,7 +28,36 @@ public class DiceBuilder : MonoBehaviour
 		highlightPossibleFaces(true);
 
         resetButton.onClick.AddListener(() => ResetUI(possibleFaces));
+        removeButton.onClick.AddListener(RemoveFace);
+        removeButton.gameObject.SetActive(false);
 
+        resetCameraButton.onClick.AddListener(ResetCamera);
+        startButton.onClick.AddListener(StartBattle);
+
+    }
+
+
+    private void ResetCamera()
+    {
+        dice.transform.rotation = Quaternion.identity;
+    }
+
+    private void StartBattle()
+    {
+
+    }
+
+    private void RemoveFace()
+    {
+        if(selectedFace != -1)
+        {
+            selected = pass;
+            EditFaceDest(selectedFace);
+            selectedFace = -1;
+            dice.HighlightFaces(false);
+            removeButton.gameObject.SetActive(false);
+            skillCard.Desactivate();
+        }
     }
 
     private void ResetUI(Skill[] possibleFaces)
@@ -37,6 +69,8 @@ public class DiceBuilder : MonoBehaviour
         {
             dice.SetSide(s, pass);
         }
+
+        dice.transform.rotation = Quaternion.identity;
     }
 
     public void SetPossibleFaces(Skill[] possibleFaces)
@@ -58,9 +92,7 @@ public class DiceBuilder : MonoBehaviour
     }
 
 
-	Skill selected = null;
-    int selectedFace = -1;
-    DiceFace selectedDF = null;
+	
 	void EditFaceSource(Skill skill, DiceFace diceFace)
 	{
 		//print(skill);
@@ -80,6 +112,7 @@ public class DiceBuilder : MonoBehaviour
             dice.HighlightFaces(false);
             skillCard.BuildInfo(skill);
             selectedFace = -1;
+            removeButton.gameObject.SetActive(false);
         }
 		
 
@@ -100,7 +133,8 @@ public class DiceBuilder : MonoBehaviour
             dice.SetSide(side, selected);
             highlightPossibleFaces(true);
             selected = null;
-            Destroy(selectedDF.gameObject);
+            if(selectedDF != null)
+                Destroy(selectedDF.gameObject);
             dice.HighlightFaces(false);
 
         }
@@ -108,7 +142,9 @@ public class DiceBuilder : MonoBehaviour
         {
             dice.HighlightFaces(false);
             selectedFace = side;
+            skillCard.BuildInfo(dice.skills[side]);
             dice.HighlightFace(side, true);
+            removeButton.gameObject.SetActive(true);
         }
 		
 
