@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.domybest.mybox": {
+      "version": "https://github.com/Deadcows/MyBox.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "hash": "a587ed2ede07a2b401d27089117d238b4ce7ebf7"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

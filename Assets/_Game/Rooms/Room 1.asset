@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10734e306c2e65942be6da59b6122b48, type: 3}
+  m_Name: Room 1
+  m_EditorClassIdentifier: 
+  GameDesignGoal: "Prendre en main le craft et le syst\xE8me de tour"
+  BossHP: 5
+  BossActions:
+  - action: 0
+    toElement: 6
+    times: 5
+  - action: 0
+    toElement: 0
+    times: 0
+  - action: 0
+    toElement: 0
+    times: 0
+  - action: 2
+    toElement: 0
+    times: 0
+  - action: 1
+    toElement: 0
+    times: 0
+  DiceFacesAvailable:
+  - {fileID: 11400000, guid: 48df711c775536344b3c2bede5192899, type: 2}
+  - {fileID: 11400000, guid: 48df711c775536344b3c2bede5192899, type: 2}
+  - {fileID: 11400000, guid: e65ce6e4bbecea14bb6c044d7fb50416, type: 2}
+  - {fileID: 11400000, guid: e65ce6e4bbecea14bb6c044d7fb50416, type: 2}
+  - {fileID: 11400000, guid: 69a76d35eecc57f4388fbf9ecfedcc71, type: 2}
+  - {fileID: 11400000, guid: 69a76d35eecc57f4388fbf9ecfedcc71, type: 2}
+  RoomIcon: {fileID: 11400000, guid: 69a76d35eecc57f4388fbf9ecfedcc71, type: 2}
