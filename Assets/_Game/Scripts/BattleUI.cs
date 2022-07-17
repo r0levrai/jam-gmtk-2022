@@ -13,6 +13,9 @@ public class BattleUI : MonoBehaviour
 	public GameObject victoryUI, defeatUI;
 	public GameObject diceBuilderUI;
 
+    public LayoutGroup playerSequence, enemySequence;
+    public DiceFace uiElementPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
