@@ -65,6 +65,19 @@ public class Dice : MonoBehaviour
         sides[nb].SetHighlight(enabled);
     }
 
+    Side savedCurrent, savedNext;
+    public void SaveCurrent()
+    {
+        savedCurrent = currentSide;
+        savedNext = nextSide;
+    }
+
+    public void LoadCurrent()
+    {
+        currentSide = savedCurrent;
+        nextSide = savedNext;
+    }
+
 	public void Advance()
 	{
 		(currentSide, nextSide) = (nextSide, opposedSide[(int)currentSide]);

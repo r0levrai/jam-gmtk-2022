@@ -50,6 +50,7 @@ public class Battle : MonoBehaviour
 		for (turn = 0; ; turn++)
 		{
             PeakEnemy();
+            PeakPlayer();
 
 			speedMultiplier = 1 + (float) turn / halveDurationEvery;
 			dice.rotationSpeed = diceRotationSpeed * speedMultiplier;
@@ -169,6 +170,26 @@ public class Battle : MonoBehaviour
 
         bossActionIndex = saveBossIndex;
         bossActionLoopCount = saveBossLoopCount;
+    }
+
+    void PeakPlayer()
+    {
+        dice.SaveCurrent();
+
+        ui.ClearPlayerActions();
+
+        for (int i = 0; i < 10; i++)
+        {
+            ui.AddPlayerAction(dice.currentSkill);
+            
+            if (dice.currentSkill.Effect == SkillEffect.Move)
+                dice.nextSide = Dice.d6neighborSide[(int)dice.currentSide, dice.currentSkill.Value];
+
+            dice.Advance();
+
+        }
+
+        dice.LoadCurrent();
     }
 
 	IEnumerator BattleEnd(bool won)
