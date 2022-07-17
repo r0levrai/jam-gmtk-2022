@@ -144,9 +144,9 @@ public class Battle : MonoBehaviour
 		// priority 3: attacks
 		if (bossAction == BossAction.Atk)
 			playerHP -= Mathf.Max(0, 1 - playerDef);
-		if (playerAction.Effect == SkillEffect.Atk && getMana() >= playerAction.Value)
+		if (playerAction.Effect == SkillEffect.Atk && getMana() >= playerAction.Resources[(int)PlayerResources.Mana])
 		{
-			setMana(getMana() - playerAction.Value);
+			setMana(getMana() - playerAction.Resources[(int)PlayerResources.Mana]);
 			bossHP -= Mathf.Max(0, playerAction.Value - bossDef);
 		}
 		if (playerAction.Effect == SkillEffect.AtkCharged)
