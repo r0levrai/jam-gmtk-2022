@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10734e306c2e65942be6da59b6122b48, type: 3}
   m_Name: Room 2
   m_EditorClassIdentifier: 
-  BossName: PlaceholderName
+  BossName: vs. Animator
+  BossSprite: {fileID: 21300000, guid: 30a61b394977ead4abfb59c69f4b7421, type: 3}
   GameDesignGoal: "Attaque charg\xE9e"
   BossHP: 5
   BossActions:

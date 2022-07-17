@@ -32,6 +32,7 @@ public class Battle : MonoBehaviour
     public void StartBattle(Room room)
 	{
 		this.room = room;
+		ui.OnEnable();
 		dice.rotateToMatchSides = true;
 		diceRotationSpeed = dice.rotationSpeed;
 		playTurns = PlayTurns();
@@ -44,6 +45,8 @@ public class Battle : MonoBehaviour
 		playerHP = 1;
 		playerResources = new int[5];
 		bossHP = room.BossHP;
+		bossActionIndex = 0;
+		bossActionLoopCount = 0;
 		float speedMultiplier = 1;
 		for (turn = 0; ; turn++)
 		{
@@ -68,7 +71,7 @@ public class Battle : MonoBehaviour
 		ActionOrLoop actionOrLoop = room.BossActions[bossActionIndex];
 		while (actionOrLoop.action == BossAction.LoopTo)
 		{
-			if (actionOrLoop.times == 0 || bossActionLoopCount < actionOrLoop.times)
+			if (actionOrLoop.times == 0 || bossActionLoopCount + 1 < actionOrLoop.times)
 			{
 				bossActionIndex = actionOrLoop.toElement;
 				bossActionLoopCount++;
@@ -93,6 +96,10 @@ public class Battle : MonoBehaviour
 		}
 		if (bossAction == BossAction.RandomizeDice) {
 			dice.Randomize();
+			playerAction = dice.currentSkill;
+		}
+		if (bossAction == BossAction.PivotDiceLeftOrRight) {
+			dice.Pivot();
 			playerAction = dice.currentSkill;
 		}
 
@@ -120,8 +127,11 @@ public class Battle : MonoBehaviour
 		// priority 3: attacks
 		if (bossAction == BossAction.Atk)
 			playerHP -= Mathf.Max(0, 1 - playerDef);
-		if (playerAction.Effect == SkillEffect.Atk)
+		if (playerAction.Effect == SkillEffect.Atk && playerResources[(int)PlayerResources.Mana] >= playerAction.Value)
+		{
+			playerResources[(int)PlayerResources.Mana] -= playerAction.Value;
 			bossHP -= Mathf.Max(0, playerAction.Value - bossDef);
+		}
 		if (playerAction.Effect == SkillEffect.AtkCharged)
 		{
 			bossHP -= Mathf.Max(0, playerResources[(int)PlayerResources.Mana] - bossDef);
@@ -139,13 +149,11 @@ public class Battle : MonoBehaviour
 		// battle end
 		if (bossHP <= 0)
 		{
-			Stop();
-			ui.BattleEnd(true);
+			StartCoroutine(BattleEnd(true));
 		}
 		else if (playerHP <= 0)
 		{
-			//Stop();
-			//ui.BattleEnd(false);
+			StartCoroutine(BattleEnd(false));
 		}
 	}
 
@@ -187,6 +195,13 @@ public class Battle : MonoBehaviour
 
         dice.LoadCurrent();
     }
+
+	IEnumerator BattleEnd(bool won)
+	{
+		Stop();
+		yield return new WaitForSeconds(2);
+		ui.BattleEnd(won);
+	}
 
 	public void Stop()
 	{

@@ -12,6 +12,7 @@ public enum BossAction
 	RandomizeDice,
 	FlipDice,
 	Def4,
+	PivotDiceLeftOrRight,
 }
 
 [System.Serializable]  // necessary for inspector UI
@@ -31,6 +32,7 @@ public class ActionOrLoop
 public class Room : ScriptableObject
 {
 	public string BossName;
+	public Sprite BossSprite;
 	[MultilineAttribute] public string GameDesignGoal;
 	public int BossHP;
 	public ActionOrLoop[] BossActions = new ActionOrLoop[1];

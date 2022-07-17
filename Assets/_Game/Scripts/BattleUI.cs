@@ -8,7 +8,7 @@ using TMPro;
 public class BattleUI : MonoBehaviour
 {
 	public Battle battle;
-    public Image movingBar, backgdoundBar;
+    public Image movingBar, backgdoundBar, bossAvatar;
     public TMP_Text nameText, HPText, playerHPText, playerManaText;
 	public GameObject victoryUI, defeatUI;
 	public GameObject diceBuilderUI;
@@ -23,11 +23,16 @@ public class BattleUI : MonoBehaviour
         nameText.outlineColor = new Color32(0, 0, 0, 255);
     }
 
-    // Update is called once per frame
-    public void Refresh()
-    {
+	public void OnEnable()
+	{
 		nameText.text = battle.room.BossName;
-        HPText.text = battle.bossHP.ToString() + "/" + battle.room.BossHP.ToString();
+		bossAvatar.sprite = battle.room.BossSprite;
+	}
+
+	// Update is called once per frame
+	public void Refresh()
+    {
+		HPText.text = battle.bossHP.ToString() + "/" + battle.room.BossHP.ToString();
         playerHPText.text = battle.playerHP.ToString();
         playerManaText.text = battle.playerResources[(int)PlayerResources.Mana].ToString();
 
