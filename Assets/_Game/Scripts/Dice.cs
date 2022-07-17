@@ -18,6 +18,9 @@ public class Dice : MonoBehaviour
 		{ Side.Up, Side.Front, Side.Down, Side.Back  },
 		{ Side.Up, Side.Back,  Side.Down, Side.Front },
 	};
+	public static Vector3[] d6sideDirections = new Vector3[] {
+		Vector3.back, Vector3.forward, Vector3.up, Vector3.down, Vector3.left, Vector3.right
+	};  // forward dir from the camera is dice's back, back is dice's front
 
 	public DiceFace[] sides = new DiceFace[6];
 	public Skill[] skills = new Skill[6];
@@ -25,6 +28,9 @@ public class Dice : MonoBehaviour
 	public Side nextSide = Side.Up;
 
 	public Skill currentSkill => skills[(int)currentSide];
+
+	public bool rotateToMatchSides = false;
+	public float rotationSpeed = 4;
 
 	void Start()
 	{
@@ -70,14 +76,11 @@ public class Dice : MonoBehaviour
 		nextSide    = opposedSide[(int)nextSide];
 	}
 
-	public void Randomize(int d=6)
+	public void Randomize()  // assume d6
 	{
-		if (d != 6)
-			Debug.LogError("[Dice.Randomize] Neighbors faces for d!=6 unknown, randomization undefined");
-		currentSide = (Side) Random.Range(0, d);
+		currentSide = (Side) Random.Range(0, 6);
 		nextSide = d6neighborSide[(int)currentSide, Random.Range(0, d6neighborSide.GetLength(1))];
 	}
-	public void Randomize() => Randomize(this.sides.Length);
 
 	public Side[] GetCycle(Side currentSide, Side nextSide)
 	{
@@ -89,4 +92,25 @@ public class Dice : MonoBehaviour
 		return cycle.ToArray();
 	}
 	public Side[] GetCycle() => GetCycle(this.currentSide, this.nextSide);
+
+	public Quaternion GetRotationFromSides()
+		=> Quaternion.Inverse( Quaternion.LookRotation(
+			d6sideDirections[(int)currentSide],
+			d6sideDirections[(int)nextSide]
+		));
+
+	public Quaternion GetRotationFromSides(Transform lookAt)
+		=> Quaternion.LookRotation(
+			lookAt.position - this.transform.position,
+			lookAt.up
+		) * GetRotationFromSides();
+
+	private void Update()  // assume d6
+	{
+		if (rotateToMatchSides)
+		{
+			Transform lookAt = Camera.main.transform;
+			transform.rotation = Quaternion.Slerp(transform.rotation, GetRotationFromSides(lookAt), rotationSpeed * Time.deltaTime);
+		}
+	}
 }

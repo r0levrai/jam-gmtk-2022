@@ -41,7 +41,7 @@ public class DiceBuilder : MonoBehaviour
 
     private void ResetCamera()
     {
-        dice.transform.rotation = Quaternion.identity;
+		dice.transform.rotation = dice.GetRotationFromSides(Camera.main.transform);
     }
 
     private void StartBattle()

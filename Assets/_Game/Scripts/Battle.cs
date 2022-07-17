@@ -24,11 +24,14 @@ public class Battle : MonoBehaviour
 
 	private int bossActionIndex;
 	private int bossActionLoopCount;
+	private float diceRotationSpeed;
 	private IEnumerator playTurns;
 
 	public void StartBattle(Room room)
 	{
 		this.room = room;
+		dice.rotateToMatchSides = true;
+		diceRotationSpeed = dice.rotationSpeed;
 		playTurns = PlayTurns();
 		StartCoroutine(playTurns);
 	}
@@ -39,12 +42,16 @@ public class Battle : MonoBehaviour
 		playerHP = 1;
 		playerResources = new int[5];
 		bossHP = room.BossHP;
+		float speedMultiplier = 1;
 		for (turn = 0; ; turn++)
 		{
-			ui.Refresh();
-			yield return new WaitForSeconds(initialTurnDuration / (1 + (float)turn/halveDurationEvery));
+			speedMultiplier = 1 + (float) turn / halveDurationEvery;
+			dice.rotationSpeed = diceRotationSpeed * speedMultiplier;
+			yield return new WaitForSeconds(0.35f * initialTurnDuration / speedMultiplier);
 			
 			Resolve(GetNextBossAction(), dice.currentSkill);
+			ui.Refresh();
+			yield return new WaitForSeconds(0.65f * initialTurnDuration / speedMultiplier);
 
 			bossActionIndex++;
 			dice.Advance();
@@ -130,6 +137,8 @@ public class Battle : MonoBehaviour
 	{
 		ui.Refresh();
 		StopCoroutine(playTurns);
+		dice.rotateToMatchSides = false;
+		dice.rotationSpeed = diceRotationSpeed;
 		ui.BattleEnd(won);
 	}
 }
