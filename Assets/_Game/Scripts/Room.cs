@@ -11,6 +11,7 @@ public enum BossAction
 	Def,
 	RandomizeDice,
 	FlipDice,
+	Def4,
 }
 
 [System.Serializable]  // necessary for inspector UI

@@ -6060,6 +6060,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24d9a266ca693c46886818e42cdf1ef, type: 2}
   - {fileID: 11400000, guid: 00c2681d531892147b4755e411fab83d, type: 2}
   - {fileID: 11400000, guid: 7140a69595f64d248ab63f322fc4cd1d, type: 2}
+  - {fileID: 11400000, guid: 93b24cef6a8834e48abb6207d2ed038b, type: 2}
+  - {fileID: 11400000, guid: 515d5c4c49e54884b911e536aaa65453, type: 2}
   unlocked: 0
 --- !u!114 &1455941472
 MonoBehaviour:
