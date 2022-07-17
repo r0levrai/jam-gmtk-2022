@@ -2106,6 +2106,14 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 1}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   highlightFreq: 1
+  skills:
+  - {fileID: 11400000, guid: f569fd9ecbc335848aee9f207a939776, type: 2}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 69a76d35eecc57f4388fbf9ecfedcc71, type: 2}
+  - {fileID: 11400000, guid: 48df711c775536344b3c2bede5192899, type: 2}
+  - {fileID: 11400000, guid: e09a5d0081673074b9de1a0e6019cad8, type: 2}
+  - {fileID: 11400000, guid: ccb78ee3d14a7a44699ba097b73dbc4d, type: 2}
+  - {fileID: 11400000, guid: d777cdd7e6586df4796233e7d32b1e79, type: 2}
 --- !u!4 &635952640
 Transform:
   m_ObjectHideFlags: 0
@@ -7291,6 +7299,10 @@ MonoBehaviour:
   victoryUI: {fileID: 35844003}
   defeatUI: {fileID: 914491323}
   diceBuilderUI: {fileID: 1550093338}
+  playerSequence: {fileID: 1588565010}
+  enemySequence: {fileID: 2001530071}
+  uiElementPrefab: {fileID: 3646746155182350281, guid: b27b1cac5e43f1243a77253ec6a7234e,
+    type: 3}
 --- !u!114 &1666000092
 MonoBehaviour:
   m_ObjectHideFlags: 0
