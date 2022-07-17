@@ -194,5 +194,7 @@ public class Battle : MonoBehaviour
 		StopCoroutine(playTurns);
 		dice.rotateToMatchSides = false;
 		dice.rotationSpeed = diceRotationSpeed;
+		dice.currentSide = Dice.Side.Front;
+		dice.nextSide = Dice.Side.Up;
 	}
 }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6acb3b7e7892a8b4b8ee2dce7176bbce, type: 3}
-  m_Name: FocusCharged
+  m_Name: Charged Focus
   m_EditorClassIdentifier: 
   Description: Create {0} mana per dice face visited
   Effect: 5

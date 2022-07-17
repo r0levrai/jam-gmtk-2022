@@ -22,6 +22,16 @@ public class DiceBuilder : MonoBehaviour
 
     void Start()
 	{
+        resetButton.onClick.AddListener(() => ResetUI(possibleFaces));
+        removeButton.onClick.AddListener(RemoveFace);
+        removeButton.gameObject.SetActive(false);
+
+        resetCameraButton.onClick.AddListener(ResetCamera);
+        startButton.onClick.AddListener(StartBattle);
+    }
+
+	private void OnEnable()
+	{
 		for (int side = 0; side < dice.sides.Length; side++)
 		{
 			int s = side;
@@ -29,15 +39,8 @@ public class DiceBuilder : MonoBehaviour
 		}
 		SetPossibleFaces(possibleFaces);
 		highlightPossibleFaces(true);
-
-        resetButton.onClick.AddListener(() => ResetUI(possibleFaces));
-        removeButton.onClick.AddListener(RemoveFace);
-        removeButton.gameObject.SetActive(false);
-
-        resetCameraButton.onClick.AddListener(ResetCamera);
-        startButton.onClick.AddListener(StartBattle);
-
-    }
+		ResetCamera();
+	}
 
 	public void Back()
 	{
@@ -55,6 +58,11 @@ public class DiceBuilder : MonoBehaviour
     {
 		if (room == null)
 			return;
+
+		dice.HighlightFaces(false);
+		selectedFace = -1;
+		highlightPossibleFaces(false);
+
 		battle.gameObject.SetActive(true);
 		battle.ui.gameObject.SetActive(true);
 		battle.StartBattle(room);
@@ -99,9 +107,13 @@ public class DiceBuilder : MonoBehaviour
 		{
 			Destroy(child.gameObject);
 		}
-		for (int i = 0; i < possibleFaces.Length; i++)
+		List<Skill> possibleFacesLeft = new List<Skill>(possibleFaces);
+		foreach (var skill in dice.skills)
 		{
-			Skill skill = possibleFaces[i];
+			possibleFacesLeft.Remove(skill);
+		}
+		foreach (var skill in possibleFacesLeft)
+		{
 			DiceFace uiElement = Instantiate<DiceFace>(uiElementPrefab, uiLayout.transform);
 			uiElement.SetSkill(skill);
 			uiElement.button.onClick.AddListener(() => EditFaceSource(skill, uiElement));
