@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraPosition : MonoBehaviour
 {
-	public Transform camera;
+	new public Transform camera;
 
 	public Transform[] targets;
 	public float speed = 2;

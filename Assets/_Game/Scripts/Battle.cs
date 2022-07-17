@@ -20,10 +20,25 @@ public class Battle : MonoBehaviour
 	public Room room;
 
 	public int turn;
-	public int bossHP;
-	public int playerHP;
-	public int[] playerResources;
+	int _bossHP;
+	public int bossHP {
+		get { return _bossHP; }
+		set { if (initialized) ui.BossDamagePopup(value - _bossHP); _bossHP = value; }
+	}
+	int _playerHP;
+	public int playerHP {
+		get { return _playerHP; }
+		set { if (initialized) ui.PlayerDamagePopup(value - _playerHP); _playerHP = value; }
+	}
+	public int[] playerResources = new int[5];
+	public void setMana(int value) {
+		ui.PlayerDamagePopup(value - playerResources[(int)PlayerResources.Mana],
+							 Data.Instance.bgColors[(int)PlayerResources.Mana]);
+		playerResources[(int)PlayerResources.Mana] = value;
+	}
+	int getMana() => playerResources[(int)PlayerResources.Mana];
 
+	private bool initialized = false;
 	private int bossActionIndex;
 	private int bossActionLoopCount;
 	private float diceRotationSpeed;
@@ -32,7 +47,7 @@ public class Battle : MonoBehaviour
     public void StartBattle(Room room)
 	{
 		this.room = room;
-		ui.OnEnable();
+		ui.Init();
 		dice.rotateToMatchSides = true;
 		diceRotationSpeed = dice.rotationSpeed;
 		playTurns = PlayTurns();
@@ -41,6 +56,7 @@ public class Battle : MonoBehaviour
 
 	IEnumerator PlayTurns()
 	{
+		initialized = false;
 		print("Battle started!");
 		playerHP = 1;
 		playerResources = new int[5];
@@ -48,12 +64,13 @@ public class Battle : MonoBehaviour
 		bossActionIndex = 0;
 		bossActionLoopCount = 0;
 		float speedMultiplier = 1;
+		initialized = true;
 		for (turn = 0; ; turn++)
 		{
             PeakEnemy();
             PeakPlayer();
 
-			speedMultiplier = 1 + (float) turn / halveDurationEvery;
+			speedMultiplier = Mathf.Min(10, 1 + (float) turn / halveDurationEvery);
 			dice.rotationSpeed = diceRotationSpeed * speedMultiplier;
 			yield return new WaitForSeconds(0.35f * initialTurnDuration / speedMultiplier);
 			
@@ -114,28 +131,28 @@ public class Battle : MonoBehaviour
 			playerDef = 1;
 		// mana
 		if (playerAction.Effect == SkillEffect.Mana)
-			playerResources[(int)PlayerResources.Mana] += playerAction.Value;
+			setMana(getMana() + playerAction.Value);
 		if (playerAction.Effect == SkillEffect.ManaCharged)
 			playerResources[(int)PlayerResources.ManaCharging]++;
 		// arrows
 		if (playerAction.Effect == SkillEffect.Move)
 		{
-			playerResources[(int)PlayerResources.Mana] += playerResources[(int)PlayerResources.ManaCharging];
+			setMana(getMana() + playerResources[(int)PlayerResources.ManaCharging]);
 			dice.nextSide = Dice.d6neighborSide[(int)dice.currentSide, playerAction.Value];
 		}
 
 		// priority 3: attacks
 		if (bossAction == BossAction.Atk)
 			playerHP -= Mathf.Max(0, 1 - playerDef);
-		if (playerAction.Effect == SkillEffect.Atk && playerResources[(int)PlayerResources.Mana] >= playerAction.Value)
+		if (playerAction.Effect == SkillEffect.Atk && getMana() >= playerAction.Value)
 		{
-			playerResources[(int)PlayerResources.Mana] -= playerAction.Value;
+			setMana(getMana() - playerAction.Value);
 			bossHP -= Mathf.Max(0, playerAction.Value - bossDef);
 		}
 		if (playerAction.Effect == SkillEffect.AtkCharged)
 		{
-			bossHP -= Mathf.Max(0, playerResources[(int)PlayerResources.Mana] - bossDef);
-			playerResources[(int)PlayerResources.Mana] = 0;
+			bossHP -= Mathf.Max(0, getMana() - bossDef);
+			setMana(0);
 		}
 
 		// priority 4: loose mana charging

@@ -15,18 +15,21 @@ public class BattleUI : MonoBehaviour
 
     public LayoutGroup playerSequence, enemySequence;
     public DiceFace uiElementPrefab;
+	public DamagePopup damagePopupPrefab;
+	public Canvas damagePopupCanvas;
 
-    // Start is called before the first frame update
-    void Start()
+	// Start is called before the first frame update
+	void Start()
     {
         nameText.outlineWidth = 0.2f;
         nameText.outlineColor = new Color32(0, 0, 0, 255);
     }
 
-	public void OnEnable()
+	public void Init()
 	{
 		nameText.text = battle.room.BossName;
 		bossAvatar.sprite = battle.room.BossSprite;
+		Refresh();
 	}
 
 	// Update is called once per frame
@@ -43,8 +46,18 @@ public class BattleUI : MonoBehaviour
 
     }
 
+	public void DamagePopup(int value, Color color, Transform parent)
+	{
+		print($"Popup {value} {color} {parent}");
+		DamagePopup dp = Instantiate<DamagePopup>(damagePopupPrefab, parent);
+		dp.text.text = value.ToString();
+		dp.text.color = color;
+	}
+	public void BossDamagePopup(int value) => DamagePopup(value, Color.red, bossAvatar.transform);
+	public void PlayerDamagePopup(int value) => DamagePopup(value, Color.red, damagePopupCanvas.transform);
+	public void PlayerDamagePopup(int value, Color color) => DamagePopup(value, color, damagePopupCanvas.transform);
 
-    public void ClearBossActions()
+	public void ClearBossActions()
     {
         foreach (Transform child in enemySequence.transform)
         {

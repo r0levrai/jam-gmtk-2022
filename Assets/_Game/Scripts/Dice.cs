@@ -13,8 +13,8 @@ public class Dice : MonoBehaviour
 	public static Side[,] d6neighborSide = new Side[,] { // in clockwize order from the top of the face
 		{ Side.Up,    Side.Right, Side.Down,  Side.Left },
 		{ Side.Down,  Side.Right, Side.Up,    Side.Left },
-		{ Side.Front, Side.Right, Side.Back,  Side.Left },
 		{ Side.Back,  Side.Right, Side.Front, Side.Left },
+		{ Side.Front, Side.Right, Side.Back,  Side.Left },
 		{ Side.Up, Side.Front, Side.Down, Side.Back  },
 		{ Side.Up, Side.Back,  Side.Down, Side.Front },
 	};
