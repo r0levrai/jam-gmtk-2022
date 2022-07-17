@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10734e306c2e65942be6da59b6122b48, type: 3}
   m_Name: Room 3
   m_EditorClassIdentifier: 
-  BossName: PlaceholderName
+  BossName: The jam judges (yes, you)
+  BossSprite: {fileID: 21300000, guid: caf7ab2623923994fbf2c42523ec3ff1, type: 3}
   GameDesignGoal: "Mana charg\xE9e"
   BossHP: 5
   BossActions:

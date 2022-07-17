@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10734e306c2e65942be6da59b6122b48, type: 3}
   m_Name: Room 6
   m_EditorClassIdentifier: 
-  BossName: PlaceholderName
+  BossName: GMTK (Great Mark The King)
+  BossSprite: {fileID: 21300000, guid: bc893ce0f979f6b4f98343582d4fb25b, type: 3}
   GameDesignGoal: "G\xE9rer le fait que le boss fait tourner le d\xE9"
   BossHP: 6
   BossActions:

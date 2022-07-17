@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10734e306c2e65942be6da59b6122b48, type: 3}
   m_Name: Room 7
   m_EditorClassIdentifier: 
-  BossName: PlaceholderName
+  BossName: The devs (don't!)
+  BossSprite: {fileID: 21300000, guid: ef9adc5de666bdd40b76c4b8fa6fe2fb, type: 3}
   GameDesignGoal: "Retourne le d\xE9"
   BossHP: 1
   BossActions:

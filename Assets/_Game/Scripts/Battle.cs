@@ -32,6 +32,7 @@ public class Battle : MonoBehaviour
     public void StartBattle(Room room)
 	{
 		this.room = room;
+		ui.OnEnable();
 		dice.rotateToMatchSides = true;
 		diceRotationSpeed = dice.rotationSpeed;
 		playTurns = PlayTurns();
