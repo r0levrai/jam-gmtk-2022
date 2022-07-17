@@ -23,4 +23,5 @@ public class Data : MonoBehaviour
 	public Color[] bgTextColors;
 	public Color highlightColor = Color.yellow;
 	public float highlightFreq = 1;
+    public Skill[] skills;
 }

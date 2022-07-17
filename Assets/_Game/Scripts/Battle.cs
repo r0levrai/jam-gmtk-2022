@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public enum PlayerResources
 {
@@ -27,7 +29,7 @@ public class Battle : MonoBehaviour
 	private float diceRotationSpeed;
 	private IEnumerator playTurns;
 
-	public void StartBattle(Room room)
+    public void StartBattle(Room room)
 	{
 		this.room = room;
 		dice.rotateToMatchSides = true;
@@ -45,6 +47,8 @@ public class Battle : MonoBehaviour
 		float speedMultiplier = 1;
 		for (turn = 0; ; turn++)
 		{
+            PeakEnemy();
+
 			speedMultiplier = 1 + (float) turn / halveDurationEvery;
 			dice.rotationSpeed = diceRotationSpeed * speedMultiplier;
 			yield return new WaitForSeconds(0.35f * initialTurnDuration / speedMultiplier);
@@ -143,6 +147,12 @@ public class Battle : MonoBehaviour
 			ui.BattleEnd(false);
 		}
 	}
+
+
+    void PeakEnemy()
+    {
+
+    }
 
 	public void Stop()
 	{
