@@ -17,6 +17,9 @@ MonoBehaviour:
   GameDesignGoal: "Contrer le lancer d\xE9"
   BossHP: 5
   BossActions:
+  - action: 0
+    toElement: 8
+    times: 0
   - action: 4
     toElement: 0
     times: 0
@@ -39,7 +42,7 @@ MonoBehaviour:
     toElement: 4
     times: 0
   - action: 1
-    toElement: 0
+    toElement: 1
     times: 5
   - action: 2
     toElement: 0
@@ -48,8 +51,8 @@ MonoBehaviour:
     toElement: 8
     times: 0
   DiceFacesAvailable:
-  - {fileID: 11400000, guid: df47cc93fa9c36444a4a4b2f7ee82acc, type: 2}
-  - {fileID: 11400000, guid: 42a149191322c6e4c9880cbec8e80cb4, type: 2}
+  - {fileID: 11400000, guid: e65ce6e4bbecea14bb6c044d7fb50416, type: 2}
+  - {fileID: 11400000, guid: 69a76d35eecc57f4388fbf9ecfedcc71, type: 2}
   - {fileID: 11400000, guid: 12b4ca1e1f84cc640b9e0eb50d681005, type: 2}
   - {fileID: 11400000, guid: 12b4ca1e1f84cc640b9e0eb50d681005, type: 2}
   - {fileID: 11400000, guid: 12b4ca1e1f84cc640b9e0eb50d681005, type: 2}

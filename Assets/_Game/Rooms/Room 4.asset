@@ -17,7 +17,7 @@ MonoBehaviour:
   GameDesignGoal: "Mana charg\xE9 + Attaque charg\xE9e"
   BossHP: 1
   BossActions:
-  - action: 3
+  - action: 6
     toElement: 0
     times: 0
   - action: 1

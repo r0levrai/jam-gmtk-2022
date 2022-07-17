@@ -126,7 +126,7 @@ public class Battle : MonoBehaviour
 		if (bossAction == BossAction.Def)
 			bossDef = 1;
 		if (bossAction == BossAction.Def4)
-			bossDef = 4;
+			bossDef = 3;
 		if (playerAction.Effect == SkillEffect.Def)
 			playerDef = 1;
 		// mana
@@ -166,11 +166,13 @@ public class Battle : MonoBehaviour
 		// battle end
 		if (bossHP <= 0)
 		{
-			StartCoroutine(BattleEnd(true));
+            bossHP = 0;
+            StartCoroutine(BattleEnd(true));
 		}
 		else if (playerHP <= 0)
 		{
-			StartCoroutine(BattleEnd(false));
+            playerHP = 0;
+            StartCoroutine(BattleEnd(false));
 		}
 	}
 

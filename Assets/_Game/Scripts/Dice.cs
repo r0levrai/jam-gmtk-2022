@@ -12,12 +12,12 @@ public class Dice : MonoBehaviour
 	};
 	public static Side[,] d6neighborSide = new Side[,] { // in clockwize order from the top of the face
 		{ Side.Up,    Side.Right, Side.Down,  Side.Left },
-		{ Side.Down,  Side.Right, Side.Up,    Side.Left },
-		{ Side.Back,  Side.Right, Side.Front, Side.Left },
-		{ Side.Front, Side.Right, Side.Back,  Side.Left },
-		{ Side.Up, Side.Front, Side.Down, Side.Back  },
-		{ Side.Up, Side.Back,  Side.Down, Side.Front },
-	};
+        { Side.Down,  Side.Right, Side.Up,    Side.Left },
+        { Side.Back,  Side.Right, Side.Front, Side.Left },
+        { Side.Front, Side.Right, Side.Back,  Side.Left },
+        { Side.Up, Side.Front, Side.Down, Side.Back  },
+        { Side.Up, Side.Back,  Side.Down, Side.Front },
+    };
 	public static Vector3[] d6sideDirections = new Vector3[] {
 		Vector3.back, Vector3.forward, Vector3.up, Vector3.down, Vector3.left, Vector3.right
 	};  // forward dir from the camera is dice's back, back is dice's front
