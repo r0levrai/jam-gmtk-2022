@@ -134,20 +134,21 @@ public class Battle : MonoBehaviour
 		// battle end
 		if (bossHP <= 0)
 		{
-			BattleEnd(true);
+			Stop();
+			ui.BattleEnd(true);
 		}
 		else if (playerHP <= 0)
 		{
-			BattleEnd(false);
+			Stop();
+			ui.BattleEnd(false);
 		}
 	}
 
-	void BattleEnd(bool won)
+	public void Stop()
 	{
 		ui.Refresh();
 		StopCoroutine(playTurns);
 		dice.rotateToMatchSides = false;
 		dice.rotationSpeed = diceRotationSpeed;
-		ui.BattleEnd(won);
 	}
 }
