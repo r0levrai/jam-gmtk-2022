@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ public class DiceBuilder : MonoBehaviour
 	public GameObject roomSelectUI;
 	public Dice dice;
 	public Battle battle;
-	public LayoutGroup uiLayout;
+	public LayoutGroup uiLayout, uiEnemyLayout;
 	public DiceFace uiElementPrefab;
 	public Skill pass;
 	public Skill[] possibleFaces;
@@ -38,7 +39,8 @@ public class DiceBuilder : MonoBehaviour
 			dice.sides[side].button.onClick.AddListener(() => EditFaceDest(s));
 		}
 		SetPossibleFaces(possibleFaces);
-		highlightPossibleFaces(true);
+        SetEnemySequence();
+        highlightPossibleFaces(true);
 		ResetCamera();
 	}
 
@@ -98,8 +100,50 @@ public class DiceBuilder : MonoBehaviour
 	public void SetRoom(Room room)
 	{
 		SetPossibleFaces(room.DiceFacesAvailable);
-		this.room = room;
+        SetEnemySequence();
+
+        this.room = room;
 	}
+
+    public void SetEnemySequence()
+    {
+        foreach (var child in uiEnemyLayout.GetComponentsInChildren<DiceFace>())
+        {
+            Destroy(child.gameObject);
+        }
+
+        List<Skill> bossSkills = new List<Skill>();
+        List<int> starts = new List<int>(), ends = new List<int>(), value = new List<int>();
+        for (int i = 0; i < room.BossActions.Length; i++)
+        {
+            ActionOrLoop action = room.BossActions[i];
+            if (action.action != BossAction.LoopTo)
+                bossSkills.Add(Data.Instance.skills[(int)action.action]);
+            else
+            {
+                starts.Add(action.toElement);
+                ends.Add(i);
+                value.Add(action.times);
+            }
+        }
+
+
+        for(int i = 0; i < bossSkills.Count; i++)
+        {
+            for(int j = 0; j < ends.Count;  j++)
+            {
+                
+            }
+            for (int j = 0; j < starts.Count; j++)
+            {
+
+            }
+        }
+
+        /*DiceFace uiElement = Instantiate<DiceFace>(uiElementPrefab, uiLayout.transform);
+        uiElement.SetSkill(skill);
+        uiElement.button.onClick.AddListener(() => EditFaceSource(skill, uiElement));*/
+    }
 
     public void SetPossibleFaces(Skill[] possibleFaces)
 	{
