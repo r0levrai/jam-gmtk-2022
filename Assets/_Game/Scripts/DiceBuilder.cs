@@ -31,20 +31,35 @@ public class DiceBuilder : MonoBehaviour
 
         resetCameraButton.onClick.AddListener(ResetCamera);
         startButton.onClick.AddListener(StartBattle);
+
+        highlightPossibleFaces(true);
+
+        selected = null;
+        selectedFace = -1;
+        selectedDF = null;
+
+        dice.HighlightFaces(false);
+
+        for (int side = 0; side < dice.sides.Length; side++)
+        {
+            int s = side;
+            dice.sides[side].button.onClick.AddListener(() => EditFaceDest(s));
+        }
     }
 
 	private void OnEnable()
 	{
-		for (int side = 0; side < dice.sides.Length; side++)
-		{
-			int s = side;
-			dice.sides[side].button.onClick.AddListener(() => EditFaceDest(s));
-		}
 		SetPossibleFaces(possibleFaces);
         highlightPossibleFaces(true);
 		ResetCamera();
         if(room != null)
             SetEnemySequence();
+
+        selected = null;
+        selectedFace = -1;
+        selectedDF = null;
+
+        dice.HighlightFaces(false);
     }
 
 	public void Back()
@@ -228,9 +243,10 @@ public class DiceBuilder : MonoBehaviour
 
 	void EditFaceDest(int side)
 	{
-		//print(side);
+		
 		if (selected != null)
 		{
+            print(side);
             if (!dice.skills[side].Equals(pass))
             {
                 Skill prevSkill = dice.skills[side];
@@ -241,13 +257,18 @@ public class DiceBuilder : MonoBehaviour
             dice.SetSide(side, selected);
             highlightPossibleFaces(true);
             selected = null;
-            if(selectedDF != null)
+            if (selectedDF != null)
+            {
                 Destroy(selectedDF.gameObject);
+                selectedDF = null;
+            }
             dice.HighlightFaces(false);
+            selectedFace = -1;
 
         }
         else
         {
+            print("hmm");
             dice.HighlightFaces(false);
             selectedFace = side;
             skillCard.BuildInfo(dice.skills[side]);
