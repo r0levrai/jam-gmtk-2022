@@ -44,6 +44,8 @@ public class Battle : MonoBehaviour
 		playerHP = 1;
 		playerResources = new int[5];
 		bossHP = room.BossHP;
+		bossActionIndex = 0;
+		bossActionLoopCount = 0;
 		float speedMultiplier = 1;
 		for (turn = 0; ; turn++)
 		{
@@ -94,6 +96,10 @@ public class Battle : MonoBehaviour
 			dice.Randomize();
 			playerAction = dice.currentSkill;
 		}
+		if (bossAction == BossAction.PivotDiceLeftOrRight) {
+			dice.Pivot();
+			playerAction = dice.currentSkill;
+		}
 
 		// priority 2: defense, buffs and other statuses
 		int bossDef = 0;
@@ -138,13 +144,11 @@ public class Battle : MonoBehaviour
 		// battle end
 		if (bossHP <= 0)
 		{
-			Stop();
-			ui.BattleEnd(true);
+			StartCoroutine(BattleEnd(true));
 		}
 		else if (playerHP <= 0)
 		{
-			Stop();
-			ui.BattleEnd(false);
+			StartCoroutine(BattleEnd(false));
 		}
 	}
 
@@ -166,6 +170,13 @@ public class Battle : MonoBehaviour
         bossActionIndex = saveBossIndex;
         bossActionLoopCount = saveBossLoopCount;
     }
+
+	IEnumerator BattleEnd(bool won)
+	{
+		Stop();
+		yield return new WaitForSeconds(2);
+		ui.BattleEnd(won);
+	}
 
 	public void Stop()
 	{

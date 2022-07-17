@@ -76,6 +76,11 @@ public class Dice : MonoBehaviour
 		nextSide    = opposedSide[(int)nextSide];
 	}
 
+	public void Pivot()  // assume d6
+	{
+		currentSide = d6neighborSide[(int)currentSide, Random.Range(0, 2) == 0 ? 1 : 3];
+	}
+
 	public void Randomize()  // assume d6
 	{
 		currentSide = (Side) Random.Range(0, 6);
