@@ -96,6 +96,8 @@ public class Battle : MonoBehaviour
 		int playerDef = 0;
 		if (bossAction == BossAction.Def)
 			bossDef = 1;
+		if (bossAction == BossAction.Def4)
+			bossDef = 4;
 		if (playerAction.Effect == SkillEffect.Def)
 			playerDef = 1;
 		// mana
@@ -116,7 +118,14 @@ public class Battle : MonoBehaviour
 		if (playerAction.Effect == SkillEffect.Atk)
 			bossHP -= Mathf.Max(0, playerAction.Value - bossDef);
 		if (playerAction.Effect == SkillEffect.AtkCharged)
-			bossHP -= Mathf.Max(0, playerResources[3] - bossDef);
+		{
+			bossHP -= Mathf.Max(0, playerResources[(int)PlayerResources.Mana] - bossDef);
+			playerResources[(int)PlayerResources.Mana] = 0;
+		}
+
+		// priority 4: loose mana charging
+		if (playerAction.Effect != SkillEffect.Move && playerAction.Effect != SkillEffect.ManaCharged)
+			playerResources[(int)PlayerResources.ManaCharging] = 0;
 
 		// priority 0: make sure you don't forget the inspector >:{
 		if (playerAction.Effect == SkillEffect.Pass && playerAction.name != "Pass")
