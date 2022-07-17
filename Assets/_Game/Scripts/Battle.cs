@@ -151,7 +151,20 @@ public class Battle : MonoBehaviour
 
     void PeakEnemy()
     {
+        int saveBossIndex = bossActionIndex;
+        int saveBossLoopCount = bossActionLoopCount;
 
+        ui.ClearBossActions();
+
+        for (int i = 0; i < 10; i++)
+        {
+            BossAction ba = GetNextBossAction();
+            ui.AddBossAction(ba);
+            bossActionIndex++;
+        }
+
+        bossActionIndex = saveBossIndex;
+        bossActionLoopCount = saveBossLoopCount;
     }
 
 	public void Stop()

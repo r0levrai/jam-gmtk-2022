@@ -38,7 +38,25 @@ public class BattleUI : MonoBehaviour
 
     }
 
-	public void BattleEnd(bool won)
+
+    public void ClearBossActions()
+    {
+        foreach (Transform child in enemySequence.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+    }
+
+
+    public void AddBossAction(BossAction ba)
+    {
+        Skill skill = Data.Instance.skills[(int)ba];
+		DiceFace uiElement = Instantiate<DiceFace>(uiElementPrefab, enemySequence.transform);
+		uiElement.SetSkill(skill);
+    }
+
+
+    public void BattleEnd(bool won)
 	{
 		if (won)
 		{
