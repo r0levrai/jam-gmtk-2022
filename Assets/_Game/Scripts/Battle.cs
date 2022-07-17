@@ -2,26 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerResources
+{
+	Mana = 3,
+	ManaCharging = 4
+}
+
 public class Battle : MonoBehaviour
 {
-	public enum PlayerResources
-	{
-		Mana = 3,
-		ManaCharging = 4
-	}
-
 	public Dice dice;
+	public BattleUI ui;
 	public float initialTurnDuration = 2;
 	public int halveDurationEvery = 6;
 
 	public Room room;
 
-	[SerializeField] int turn;
-	[SerializeField] int playerHP;
-	[SerializeField] int[] playerResources;
-	[SerializeField] int bossHP;
-	[SerializeField] int bossActionIndex;
-	[SerializeField] int bossActionLoopCount;
+	public int turn;
+	public int bossHP;
+	public int playerHP;
+	public int[] playerResources;
+
+	private int bossActionIndex;
+	private int bossActionLoopCount;
 	private IEnumerator playTurns;
 
 	public void StartBattle(Room room)
@@ -39,6 +41,7 @@ public class Battle : MonoBehaviour
 		bossHP = room.BossHP;
 		for (turn = 0; ; turn++)
 		{
+			ui.Refresh();
 			yield return new WaitForSeconds(initialTurnDuration / (1 + (float)turn/halveDurationEvery));
 			
 			Resolve(GetNextBossAction(), dice.currentSkill);
@@ -125,15 +128,8 @@ public class Battle : MonoBehaviour
 
 	void BattleEnd(bool won)
 	{
+		ui.Refresh();
 		StopCoroutine(playTurns);
-
-		if (won)
-		{
-			print("Battle won :)");
-		}
-		else
-		{
-			print("Battle lost :/");
-		}
+		ui.BattleEnd(won);
 	}
 }

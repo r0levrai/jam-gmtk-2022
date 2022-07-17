@@ -7,11 +7,11 @@ using TMPro;
 
 public class BattleUI : MonoBehaviour
 {
-    public int HP, HPMax, playerHP, playerMana;
-    public String bossName;
+	public Battle battle;
     public Image movingBar, backgdoundBar;
     public TMP_Text nameText, HPText, playerHPText, playerManaText;
-
+	public GameObject victoryUI, defeatUI;
+	public GameObject diceBuilderUI;
 
     // Start is called before the first frame update
     void Start()
@@ -21,17 +21,39 @@ public class BattleUI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Refresh()
     {
-        nameText.text = bossName;
-        HPText.text = HP.ToString() + "/" + HPMax.ToString();
-        playerHPText.text = playerHP.ToString();
-        playerManaText.text = playerMana.ToString();
+		nameText.text = battle.room.BossName;
+        HPText.text = battle.bossHP.ToString() + "/" + battle.room.BossHP.ToString();
+        playerHPText.text = battle.playerHP.ToString();
+        playerManaText.text = battle.playerResources[(int)PlayerResources.Mana].ToString();
 
         Vector2 size = backgdoundBar.rectTransform.sizeDelta;
         Vector2 currSize = size;
-        currSize.x = size.x * (float)HP / (float)HPMax;
+        currSize.x = size.x * (float)battle.bossHP / battle.room.BossHP;
         movingBar.rectTransform.sizeDelta = currSize;
 
     }
+
+	public void BattleEnd(bool won)
+	{
+		if (won)
+		{
+			print("Battle won :)");
+			victoryUI.gameObject.SetActive(true);
+		}
+		else
+		{
+			print("Battle lost :/");
+			defeatUI.gameObject.SetActive(true);
+		}
+	}
+
+	public void Exit()  // called by a button
+	{
+		diceBuilderUI.gameObject.SetActive(true);
+		victoryUI.gameObject.SetActive(false);
+		defeatUI.gameObject.SetActive(false);
+		this.gameObject.SetActive(false);
+	}
 }

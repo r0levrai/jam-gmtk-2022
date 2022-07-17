@@ -46,8 +46,12 @@ public class DiceBuilder : MonoBehaviour
 
     private void StartBattle()
     {
-		if (room != null)
-			battle.StartBattle(room);
+		if (room == null)
+			return;
+		battle.gameObject.SetActive(true);
+		battle.ui.gameObject.SetActive(true);
+		battle.StartBattle(room);
+		this.gameObject.SetActive(false);
 	}
 
     private void RemoveFace()

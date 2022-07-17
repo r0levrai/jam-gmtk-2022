@@ -29,6 +29,7 @@ public class ActionOrLoop
 [CreateAssetMenu(fileName = "Room N", menuName = "ScriptableObjects/CreateRoom", order = 1)]
 public class Room : ScriptableObject
 {
+	public string BossName;
 	[MultilineAttribute] public string GameDesignGoal;
 	public int BossHP;
 	public ActionOrLoop[] BossActions = new ActionOrLoop[1];

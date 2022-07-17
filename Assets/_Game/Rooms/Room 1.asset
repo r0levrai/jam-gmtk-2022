@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10734e306c2e65942be6da59b6122b48, type: 3}
   m_Name: Room 1
   m_EditorClassIdentifier: 
+  BossName: PlaceholderName
   GameDesignGoal: "Prendre en main le craft et le syst\xE8me de tour"
   BossHP: 5
   BossActions:
