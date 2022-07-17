@@ -11,7 +11,7 @@ public class SelectRoom : MonoBehaviour
 	public Room[] data;
 	public int unlocked = -1;
 
-	private void Start()
+	private void OnEnable()
 	{
 		diceBuilder.gameObject.SetActive(false);
 		RefreshList();

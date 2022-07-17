@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class DiceBuilder : MonoBehaviour
 {
+	public GameObject roomSelectUI;
 	public Dice dice;
 	public Battle battle;
 	public LayoutGroup uiLayout;
@@ -37,6 +38,12 @@ public class DiceBuilder : MonoBehaviour
         startButton.onClick.AddListener(StartBattle);
 
     }
+
+	public void Back()
+	{
+		roomSelectUI.gameObject.SetActive(true);
+		this.gameObject.SetActive(false);
+	}
 
 
     private void ResetCamera()
