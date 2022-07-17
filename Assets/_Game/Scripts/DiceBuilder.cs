@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DiceBuilder : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class DiceBuilder : MonoBehaviour
 	public Battle battle;
 	public LayoutGroup uiLayout, uiEnemyLayout;
 	public DiceFace uiElementPrefab;
-	public Skill pass;
+    public GameObject textBigPrefab, textSmallPrefab;
+    public Skill pass;
 	public Skill[] possibleFaces;
 	public SkillCard skillCard;
     public Button resetButton, removeButton, resetCameraButton, startButton;
@@ -39,7 +41,6 @@ public class DiceBuilder : MonoBehaviour
 			dice.sides[side].button.onClick.AddListener(() => EditFaceDest(s));
 		}
 		SetPossibleFaces(possibleFaces);
-        SetEnemySequence();
         highlightPossibleFaces(true);
 		ResetCamera();
 	}
@@ -84,9 +85,10 @@ public class DiceBuilder : MonoBehaviour
         }
     }
 
-    private void ResetUI(Skill[] possibleFaces)
+    private void ResetUI(Skill[] roomPossibleFaces)
     {
-        SetPossibleFaces(possibleFaces);
+        possibleFaces = roomPossibleFaces;
+        SetPossibleFaces(roomPossibleFaces);
         highlightPossibleFaces(true);
 
         for (int s = 0; s < dice.sides.Length; s++)
@@ -94,16 +96,22 @@ public class DiceBuilder : MonoBehaviour
             dice.SetSide(s, pass);
         }
 
+        selected = null;
+        selectedFace = -1;
+        selectedDF = null;
+
+        dice.HighlightFaces(false);
+
         dice.transform.rotation = Quaternion.identity;
     }
 
 	public void SetRoom(Room room)
 	{
-		SetPossibleFaces(room.DiceFacesAvailable);
-        SetEnemySequence();
-
         this.room = room;
-	}
+
+        ResetUI(room.DiceFacesAvailable);
+        SetEnemySequence();
+    }
 
     public void SetEnemySequence()
     {
@@ -114,6 +122,7 @@ public class DiceBuilder : MonoBehaviour
 
         List<Skill> bossSkills = new List<Skill>();
         List<int> starts = new List<int>(), ends = new List<int>(), value = new List<int>();
+        int nbLoops = 0;
         for (int i = 0; i < room.BossActions.Length; i++)
         {
             ActionOrLoop action = room.BossActions[i];
@@ -121,28 +130,48 @@ public class DiceBuilder : MonoBehaviour
                 bossSkills.Add(Data.Instance.skills[(int)action.action]);
             else
             {
-                starts.Add(action.toElement);
-                ends.Add(i);
+                starts.Add(action.toElement - nbLoops);
+                ends.Add(bossSkills.Count);
                 value.Add(action.times);
+                nbLoops++;
             }
         }
 
 
-        for(int i = 0; i < bossSkills.Count; i++)
+        for(int i = 0; i < bossSkills.Count + 1; i++)
         {
-            for(int j = 0; j < ends.Count;  j++)
+            for(int j = 0; j < starts.Count;  j++)
             {
-                
-            }
-            for (int j = 0; j < starts.Count; j++)
-            {
+                if(i == ends[j])
+                {
+                    GameObject uiElement1 = Instantiate<GameObject>(textBigPrefab, uiEnemyLayout.transform);
+                    uiElement1.GetComponentInChildren<TMP_Text>().text = "]";
 
+                    GameObject uiElement2 = Instantiate<GameObject>(textSmallPrefab, uiEnemyLayout.transform);
+                    uiElement2.GetComponentInChildren<TMP_Text>().text = value[j] == 0 ? "x Inf" : "x " + value[j].ToString();
+                }
+                if(i == starts[j])
+                {
+                    GameObject uiElement3 = Instantiate<GameObject>(textBigPrefab, uiEnemyLayout.transform);
+                    uiElement3.GetComponentInChildren<TMP_Text>().text = "[";
+                }
+               
+            }
+            if(i < bossSkills.Count)
+            {
+                Skill skill = bossSkills[i];
+                DiceFace uiElement = Instantiate<DiceFace>(uiElementPrefab, uiEnemyLayout.transform);
+                uiElement.SetSkill(skill);
+                uiElement.button.onClick.AddListener(() => ShowSkill(skill));
             }
         }
 
-        /*DiceFace uiElement = Instantiate<DiceFace>(uiElementPrefab, uiLayout.transform);
-        uiElement.SetSkill(skill);
-        uiElement.button.onClick.AddListener(() => EditFaceSource(skill, uiElement));*/
+        
+    }
+
+    void ShowSkill(Skill s)
+    {
+        skillCard.BuildInfo(s);
     }
 
     public void SetPossibleFaces(Skill[] possibleFaces)
