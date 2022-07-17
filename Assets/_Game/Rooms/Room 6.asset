@@ -29,13 +29,13 @@ MonoBehaviour:
   - action: 3
     toElement: 0
     times: 5
-  - action: 5
+  - action: 7
     toElement: 0
     times: 5
   - action: 3
     toElement: 4
     times: 0
-  - action: 5
+  - action: 7
     toElement: 4
     times: 0
   - action: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
     times: 0
   - action: 1
     toElement: 0
-    times: 5
+    times: 6
   - action: 2
     toElement: 0
     times: 5

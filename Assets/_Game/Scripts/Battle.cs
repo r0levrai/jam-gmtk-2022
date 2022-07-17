@@ -109,7 +109,7 @@ public class Battle : MonoBehaviour
 		if (bossAction == BossAction.Def)
 			bossDef = 1;
 		if (bossAction == BossAction.Def4)
-			bossDef = 4;
+			bossDef = 3;
 		if (playerAction.Effect == SkillEffect.Def)
 			playerDef = 1;
 		// mana
@@ -127,9 +127,9 @@ public class Battle : MonoBehaviour
 		// priority 3: attacks
 		if (bossAction == BossAction.Atk)
 			playerHP -= Mathf.Max(0, 1 - playerDef);
-		if (playerAction.Effect == SkillEffect.Atk && playerResources[(int)PlayerResources.Mana] >= playerAction.Value)
+		if (playerAction.Effect == SkillEffect.Atk && playerResources[(int)PlayerResources.Mana] >= playerAction.Resources[(int)PlayerResources.Mana])
 		{
-			playerResources[(int)PlayerResources.Mana] -= playerAction.Value;
+			playerResources[(int)PlayerResources.Mana] -= playerAction.Resources[(int)PlayerResources.Mana];
 			bossHP -= Mathf.Max(0, playerAction.Value - bossDef);
 		}
 		if (playerAction.Effect == SkillEffect.AtkCharged)
@@ -149,11 +149,13 @@ public class Battle : MonoBehaviour
 		// battle end
 		if (bossHP <= 0)
 		{
-			StartCoroutine(BattleEnd(true));
+            bossHP = 0;
+            StartCoroutine(BattleEnd(true));
 		}
 		else if (playerHP <= 0)
 		{
-			StartCoroutine(BattleEnd(false));
+            playerHP = 0;
+            StartCoroutine(BattleEnd(false));
 		}
 	}
 

@@ -25,7 +25,7 @@ public class DiceBuilder : MonoBehaviour
 
     void Start()
 	{
-        resetButton.onClick.AddListener(() => ResetUI(possibleFaces));
+        resetButton.onClick.AddListener(ResetUI);
         removeButton.onClick.AddListener(RemoveFace);
         removeButton.gameObject.SetActive(false);
 
@@ -43,7 +43,9 @@ public class DiceBuilder : MonoBehaviour
 		SetPossibleFaces(possibleFaces);
         highlightPossibleFaces(true);
 		ResetCamera();
-	}
+        if(room != null)
+            SetEnemySequence();
+    }
 
 	public void Back()
 	{
@@ -85,16 +87,17 @@ public class DiceBuilder : MonoBehaviour
         }
     }
 
-    private void ResetUI(Skill[] roomPossibleFaces)
+    private void ResetUI()
     {
-        possibleFaces = roomPossibleFaces;
-        SetPossibleFaces(roomPossibleFaces);
-        highlightPossibleFaces(true);
-
+        
         for (int s = 0; s < dice.sides.Length; s++)
         {
             dice.SetSide(s, pass);
         }
+
+        possibleFaces = room.DiceFacesAvailable;
+        SetPossibleFaces(room.DiceFacesAvailable);
+        highlightPossibleFaces(true);
 
         selected = null;
         selectedFace = -1;
@@ -109,7 +112,7 @@ public class DiceBuilder : MonoBehaviour
 	{
         this.room = room;
 
-        ResetUI(room.DiceFacesAvailable);
+        ResetUI();
         SetEnemySequence();
     }
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   BossName: The jam judges (yes, you!)
   BossSprite: {fileID: 21300000, guid: caf7ab2623923994fbf2c42523ec3ff1, type: 3}
   GameDesignGoal: "Mana charg\xE9e"
-  BossHP: 5
+  BossHP: 4
   BossActions:
   - action: 0
     toElement: 0
@@ -31,7 +31,7 @@ MonoBehaviour:
     times: 0
   DiceFacesAvailable:
   - {fileID: 11400000, guid: df47cc93fa9c36444a4a4b2f7ee82acc, type: 2}
-  - {fileID: 11400000, guid: 69a76d35eecc57f4388fbf9ecfedcc71, type: 2}
+  - {fileID: 11400000, guid: 0d78e9fd9b929e6478b3cb169ecfd1ad, type: 2}
   - {fileID: 11400000, guid: 12b4ca1e1f84cc640b9e0eb50d681005, type: 2}
   - {fileID: 11400000, guid: 12b4ca1e1f84cc640b9e0eb50d681005, type: 2}
   - {fileID: 11400000, guid: 5f1647bd53577574e9c899164b77a6b1, type: 2}
