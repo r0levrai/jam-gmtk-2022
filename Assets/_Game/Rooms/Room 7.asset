@@ -21,7 +21,7 @@ MonoBehaviour:
     times: 0
   - action: 1
     toElement: 0
-    times: 19
+    times: 20
   - action: 5
     toElement: 1
     times: 6
@@ -33,7 +33,7 @@ MonoBehaviour:
     times: 0
   DiceFacesAvailable:
   - {fileID: 11400000, guid: e65ce6e4bbecea14bb6c044d7fb50416, type: 2}
-  - {fileID: 11400000, guid: df47cc93fa9c36444a4a4b2f7ee82acc, type: 2}
+  - {fileID: 11400000, guid: 42a149191322c6e4c9880cbec8e80cb4, type: 2}
   - {fileID: 11400000, guid: 12b4ca1e1f84cc640b9e0eb50d681005, type: 2}
   - {fileID: 11400000, guid: 12b4ca1e1f84cc640b9e0eb50d681005, type: 2}
   - {fileID: 11400000, guid: 5f1647bd53577574e9c899164b77a6b1, type: 2}
@@ -42,4 +42,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 90939750c36db9f45bb1a322d7580968, type: 2}
   - {fileID: 11400000, guid: 14898587376093f49bc5267049de1f89, type: 2}
   - {fileID: 11400000, guid: 14898587376093f49bc5267049de1f89, type: 2}
+  - {fileID: 11400000, guid: 42a149191322c6e4c9880cbec8e80cb4, type: 2}
   RoomIcon: {fileID: 11400000, guid: 48df711c775536344b3c2bede5192899, type: 2}

@@ -50,8 +50,8 @@ MonoBehaviour:
     toElement: 9
     times: 0
   DiceFacesAvailable:
-  - {fileID: 11400000, guid: 48df711c775536344b3c2bede5192899, type: 2}
-  - {fileID: 11400000, guid: 48df711c775536344b3c2bede5192899, type: 2}
+  - {fileID: 11400000, guid: e65ce6e4bbecea14bb6c044d7fb50416, type: 2}
+  - {fileID: 11400000, guid: e65ce6e4bbecea14bb6c044d7fb50416, type: 2}
   - {fileID: 11400000, guid: 69a76d35eecc57f4388fbf9ecfedcc71, type: 2}
   - {fileID: 11400000, guid: 69a76d35eecc57f4388fbf9ecfedcc71, type: 2}
   - {fileID: 11400000, guid: 48df711c775536344b3c2bede5192899, type: 2}
