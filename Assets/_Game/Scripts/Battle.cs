@@ -70,7 +70,7 @@ public class Battle : MonoBehaviour
 		ActionOrLoop actionOrLoop = room.BossActions[bossActionIndex];
 		while (actionOrLoop.action == BossAction.LoopTo)
 		{
-			if (actionOrLoop.times == 0 || bossActionLoopCount < actionOrLoop.times)
+			if (actionOrLoop.times == 0 || bossActionLoopCount + 1 < actionOrLoop.times)
 			{
 				bossActionIndex = actionOrLoop.toElement;
 				bossActionLoopCount++;

@@ -21,7 +21,7 @@ MonoBehaviour:
     times: 0
   - action: 1
     toElement: 0
-    times: 20
+    times: 19
   - action: 5
     toElement: 1
     times: 6
